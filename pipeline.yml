@@ -34,7 +34,7 @@ jobs:
       image: platform-automation-image
       file: platform-automation-tasks/tasks/credhub-interpolate.yml
       params:
-        CREDHUB_CLIENT: ((credhub-client))
+        CREDHUB_CLIENT: ((credhub-client)) # client
         CREDHUB_SECRET: ((credhub-secret))
         CREDHUB_SERVER: https://10.0.6.97:8844
         PREFIX: /concourse/main/foundation
