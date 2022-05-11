@@ -38,7 +38,7 @@ jobs:
         CREDHUB_SECRET: ((credhub-secret))
         CREDHUB_SERVER: https://10.0.6.97:8844
         PREFIX: /concourse/main/foundation
-        INTERPOLATION_PATHS: foundation # contains download-ops-manager.yml
+        INTERPOLATION_PATHS: foundation # contain123s download-ops-manager.yml
       input_mapping:
         files: config
       output_mapping:
