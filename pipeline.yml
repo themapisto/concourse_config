@@ -37,6 +37,7 @@ jobs:
         CREDHUB_CLIENT: concourse_client
         CREDHUB_SECRET: nladn6eysrmn3b6mbjya
         CREDHUB_SERVER: https://10.0.6.97:8844
+        CREDHUB_CA_CERT: ((credhub-ca-cert))
         PREFIX: /concourse/main/
         INTERPOLATION_PATHS: foundation # contain123s download-ops-manager.yml
         SKIP_MISSING: false
