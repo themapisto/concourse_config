@@ -34,11 +34,12 @@ jobs:
       image: platform-automation-image
       file: platform-automation-tasks/tasks/credhub-interpolate.yml
       params:
-        CREDHUB_CLIENT: ((credhub-client)) # client
-        CREDHUB_SECRET: ((credhub-secret))
+        CREDHUB_CLIENT: concourse_client
+        CREDHUB_SECRET: nladn6eysrmn3b6mbjya
         CREDHUB_SERVER: https://10.0.6.97:8844
-        PREFIX: /concourse/main/foundation
+        PREFIX: /concourse/main/
         INTERPOLATION_PATHS: foundation # contain123s download-ops-manager.yml
+        SKIP_MISSING: false
       input_mapping:
         files: config
       output_mapping:
