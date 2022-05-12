@@ -43,7 +43,7 @@ jobs:
       params:
         CREDHUB_CLIENT: ((credhub-client))
         CREDHUB_SECRET: ((credhub-secret))
-        CREDHUB_SERVER: https://10.0.6.97:8443
+        CREDHUB_SERVER: https://10.0.6.97:8844
         PREFIX: /concourse/main/foundation
         INTERPOLATION_PATHS: foundation # contains env.yml
       input_mapping:
