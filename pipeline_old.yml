@@ -16,7 +16,7 @@ resources:
     uri: https://github.com/themapisto/concourse_config.git
     branch: main
 jobs:
-- name: export-installation
+- name: install-ops-manager
   serial: true
   plan:
     - get: platform-automation-image
@@ -29,10 +29,21 @@ jobs:
       params:
         globs: ["*tasks*.zip"]
         unpack: true
-    - get: env
-    - task: export-installation
+    - get: config
+#    - task: credhub-interpolate
+#      image: platform-automation-image
+#      file: platform-automation-tasks/tasks/credhub-interpolate.yml
+#      params:
+#        CREDHUB_CLIENT: concourse_client
+#        CREDHUB_SECRET: nladn6eysrmn3b6mbjya
+#        CREDHUB_SERVER: https://10.0.6.97:8844
+#        PREFIX: /
+#      input_mapping:
+#        files: config
+#      output_mapping:
+#        interpolated-files: interpolated-config
+    - task: download-product
       image: platform-automation-image
-      file: platform-automation-tasks/tasks/export-installation.yml
-    - put: installation
+      file: platform-automation-tasks/tasks/download-product.yml
       params:
-        file: installation/installation-*.zip
+        CONFIG_FILE: foundation/download-ops-manager.yml
