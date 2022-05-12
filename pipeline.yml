@@ -10,11 +10,18 @@ resources:
   source:
     product_slug: platform-automation
     api_token: ((pivnet-refresh-token))
-- name: config
+- name: env
   type: git
   source:
     uri: https://github.com/themapisto/concourse_config.git
     branch: main
+- name: installation
+  type: s3
+  source:
+    access_key_id: ((s3-access-key-id))
+    secret_access_key: ((s3-secret-key))
+    bucket: tas-koo
+    regexp: foundation/installation-(.*).zip
 jobs:
 - name: export-installation
   serial: true
