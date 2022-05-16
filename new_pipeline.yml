@@ -93,8 +93,6 @@ jobs:
               exit 1
             fi
 
-    # $INTERPOLATION_PATHS needs to be globbed to read multiple files
-    # shellcheck disable=SC2086
             files=$(cd files && find $INTERPOLATION_PATHS -type f -name '*.yml' -follow)
 
             if [ "$SKIP_MISSING" == "true" ]; then
