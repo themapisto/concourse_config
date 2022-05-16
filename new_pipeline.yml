@@ -39,6 +39,17 @@ jobs:
     - get: env
     - task: credhub-login
       image: platform-automation-image
+      params:
+        CREDHUB_CLIENT: ((credhub-client))
+        CREDHUB_SECRET: ((credhub-secret))
+        CREDHUB_SERVER: https://10.0.6.97:8844
+        #CREDHUB_CA_CERT: |
+        PREFIX: foundation
+        INTERPOLATION_PATHS: foundation # contains env.yml
+        input_mapping:
+          files: env
+        output_mapping:
+          interpolated-file: interpolated-env
       config: 
         platform: linux
         run:
@@ -76,21 +87,30 @@ jobs:
             credhub --version
             cat ~/credhub-ca.crt
             credhub login --ca-cert ~/credhub-ca.crt --client-name concourse_client --client-secret nladn6eysrmn3b6mbjya
-            
-    - task: credhub-interpolate
-      image: platform-automation-image
-      file: platform-automation-tasks/tasks/credhub-interpolate.yml
-      params:
-        CREDHUB_CLIENT: ((credhub-client))
-        CREDHUB_SECRET: ((credhub-secret))
-        CREDHUB_SERVER: https://10.0.6.97:8844
-        #CREDHUB_CA_CERT: |
-        PREFIX: foundation
-        INTERPOLATION_PATHS: foundation # contains env.yml
-      input_mapping:
-        files: env
-      output_mapping:
-        interpolated-file: interpolated-env
+            credhub --version
+            if [ -z "$PREFIX" ]; then
+              echo "Please specify a PREFIX. It is required."
+              exit 1
+            fi
+
+    # $INTERPOLATION_PATHS needs to be globbed to read multiple files
+    # shellcheck disable=SC2086
+            files=$(cd files && find $INTERPOLATION_PATHS -type f -name '*.yml' -follow)
+
+            if [ "$SKIP_MISSING" == "true" ]; then
+              export SKIP_MISSING="--skip-missing"
+            else
+              export SKIP_MISSING=""
+            fi
+
+            for file in $files; do
+              echo "interpolating files/$file"
+              mkdir -p interpolated-files/"$(dirname "$file")"
+              credhub interpolate --prefix "$PREFIX" \
+              --file files/"$file" $SKIP_MISSING \
+              > interpolated-files/"$file"
+              done
+
     - task: export-installation
       image: platform-automation-image
       file: platform-automation-tasks/tasks/export-installation.yml
