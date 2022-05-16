@@ -39,17 +39,6 @@ jobs:
     - get: env
     - task: credhub-login
       image: platform-automation-image
-      params:
-        CREDHUB_CLIENT: ((credhub-client))
-        CREDHUB_SECRET: ((credhub-secret))
-        CREDHUB_SERVER: https://10.0.6.97:8844
-        #CREDHUB_CA_CERT: |
-        PREFIX: foundation
-        INTERPOLATION_PATHS: foundation # contains env.yml
-        input_mapping:
-          files: env
-        output_mapping:
-          interpolated-file: interpolated-env
       config: 
         platform: linux
         run:
