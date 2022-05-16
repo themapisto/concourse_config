@@ -111,7 +111,7 @@ jobs:
       image: platform-automation-image
       file: platform-automation-tasks/tasks/export-installation.yml
       params:
-        ENV_FILE: your/env/path/env.yml
+        ENV_FILE: foundation/env.yml
       input_mapping:
         env: interpolated-env
     - put: installation
