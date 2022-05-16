@@ -79,7 +79,7 @@ jobs:
             credhub --version
               
             export PREFIX="foundation"
-            export INTERPOLATION_PATHS:"foundation"
+            export INTERPOLATION_PATHS="foundation"
               
               
             if [ -z "$PREFIX" ]; then
