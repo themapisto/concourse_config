@@ -77,6 +77,11 @@ jobs:
             cat ~/credhub-ca.crt
             credhub login --ca-cert ~/credhub-ca.crt --client-name concourse_client --client-secret nladn6eysrmn3b6mbjya
             credhub --version
+              
+            export PREFIX= foundation
+            export INTERPOLATION_PATHS: foundation
+              
+              
             if [ -z "$PREFIX" ]; then
               echo "Please specify a PREFIX. It is required."
               exit 1
