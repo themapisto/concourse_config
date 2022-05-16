@@ -104,6 +104,10 @@ jobs:
               --file files/"$file" $SKIP_MISSING \
               > interpolated-files/"$file"
               done
+      input_mapping:
+        files: env
+      output_mapping:
+        interpolated-file: interpolated-env
 
     - task: export-installation
       image: platform-automation-image
