@@ -74,10 +74,7 @@ jobs:
             ls ~/
             export PREFIX= "foundation"
             
-            if [ -z "$PREFIX" ]; then
-              echo "Please specify a PREFIX. It is required."
-              exit 1
-            fi
+
 
             # $INTERPOLATION_PATHS needs to be globbed to read multiple files
             # shellcheck disable=SC2086
@@ -93,7 +90,7 @@ jobs:
             for file in $files; do
               echo "interpolating files/$file"
               mkdir -p interpolated-files/"$(dirname "$file")"
-              credhub interpolate --prefix "$PREFIX" \
+              credhub interpolate --prefix "foundation" \
               --file files/"$file" $SKIP_MISSING \
               > interpolated-files/"$file"
             done
