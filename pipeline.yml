@@ -51,12 +51,6 @@ jobs:
         files: env
       output_mapping:
         interpolated-file: interpolated-env
-      run:
-        path: bash
-        args:
-          - "-c"
-          - |
-            credhub --version
     - task: export-installation
       image: platform-automation-image
       file: platform-automation-tasks/tasks/export-installation.yml
