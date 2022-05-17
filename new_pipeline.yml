@@ -94,6 +94,7 @@ jobs:
               credhub interpolate --prefix "$PREFIX" \
               --file files/"$file" $SKIP_MISSING \
               > interpolated-files/"$file"
+            cat interpolated-files/"$file"
               done
       input_mapping:
         files: env
