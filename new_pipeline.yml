@@ -70,8 +70,10 @@ jobs:
             cat ~/credhub-ca.crt
             credhub login --ca-cert ~/credhub-ca.crt --client-name concourse_client --client-secret nladn6eysrmn3b6mbjya
             credhub --version
-      outputs:
-        - name: login
+            mkdir ~/foundation
+            ls ~/
+        outputs:
+        - name: files
     - task: credhub-interpolate
       image: platform-automation-image
       file: platform-automation-tasks/tasks/credhub-interpolate.yml
@@ -82,8 +84,8 @@ jobs:
         #CREDHUB_CA_CERT: |
         PREFIX: foundation
         INTERPOLATION_PATHS: foundation # contains env.yml
-      inputs:
-        - name: login
-      output_mapping:
-        interpolated-file: interpolated-env
+        inputs:
+        - name: files
+        output_mapping:
+          interpolated-file: interpolated-env
 
