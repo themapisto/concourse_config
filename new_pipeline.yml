@@ -93,21 +93,9 @@ jobs:
               credhub interpolate --prefix "foundation" \
               --file files/"$file" $SKIP_MISSING \
               > interpolated-files/"$file"
+            ls ~/interpolated-files/
             done
         outputs:
         - name: files
-    - task: credhub-interpolate
-      image: platform-automation-image
-      file: platform-automation-tasks/tasks/credhub-interpolate.yml
-      params:
-        CREDHUB_CLIENT: ((credhub-client))
-        CREDHUB_SECRET: ((credhub-secret))
-        CREDHUB_SERVER: https://10.0.6.97:8844
-        #CREDHUB_CA_CERT: |
-        PREFIX: foundation
-        INTERPOLATION_PATHS: foundation # contains env.yml
-        inputs:
-        - name: files
-        output_mapping:
-          interpolated-file: interpolated-env
+
 
