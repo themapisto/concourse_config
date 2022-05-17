@@ -37,46 +37,6 @@ jobs:
         globs: ["*tasks*.zip"]
         unpack: true
     - get: env
-    - task: credhub-login
-      image: platform-automation-image
-      config: 
-        platform: linux
-        run:
-          path: bash
-          args: 
-          - "-c"
-          - |
-            credhub api --server https://10.0.6.97:8844 --skip-tls-validation
-            echo "-----BEGIN CERTIFICATE-----
-            MIIEZDCCAsygAwIBAgIRAMek1XYWrUBZaojtmtm4Ck4wDQYJKoZIhvcNAQELBQAw
-            OzEMMAoGA1UEBhMDVVNBMRYwFAYDVQQKEw1DbG91ZCBGb3VuZHJ5MRMwEQYDVQQD
-            EwpDcmVkSHViIENBMB4XDTIyMDUwOTAyMzkwNFoXDTIzMDUwOTAyMzkwNFowOzEM
-            MAoGA1UEBhMDVVNBMRYwFAYDVQQKEw1DbG91ZCBGb3VuZHJ5MRMwEQYDVQQDEwpD
-            cmVkSHViIENBMIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKCAYEA7Xz5G7T0
-            yl9lnSXakx6qwckt7oFMUTnnQmmWcU/moNe4LpbK8p91HYn4YdQFVr5c+iho2JyC
-            jwv2pjNcfos6K9DlPmgDW7BaGAcd7/H3osEYFDyP9N34vwefisRkhoPd8qfKJ9zj
-            6+9ibxcn5mPZuXlN7uuRhMo2qpAK3dyIUPJAucaFLSzOo28RniJsqZMmxlJn8/I1
-            yfJ29EMCRv7FwFLvuauLJNcfvQLuQJRdxMKtGKEBn0wC8GE/j5FCrA8lY/k4pzeb
-            3UullLPn3EdIT5vrzteF2w/TJrzVrKiCDTpPwL+kwr840Tmsq+KKhN+U2deFErm7
-            utFccPII0IclaiJOBgHQs+20Gm2VxtWjMWJMRty+34OkcwvWRxJVNU7N6G4xogFH
-            4sdWYN81ggAhzjDpgufttey8Jpx4dHforpNa6co7SyrhBEsGavF12/F7suTNghcP
-            kRDtAfZIF5yqrzjWrNcR/q2Z4moC80rSMfE58wu8nw6hd/CIm3+m1bsxAgMBAAGj
-            YzBhMA4GA1UdDwEB/wQEAwIBBjAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBSf
-            p3ZkL9dn/KHSIGOMAzcIuBgNXzAfBgNVHSMEGDAWgBSfp3ZkL9dn/KHSIGOMAzcI
-            uBgNXzANBgkqhkiG9w0BAQsFAAOCAYEAroXPq4UcjeHFeTzfU30TWBJ2gBRLb72E
-            JnCk6wP4B1hZacMLNB2W9V5PWF6cx75WcTKSLR7ySSaLday+FYGPEVPDf+7CJ0YP
-            hwCciFiG/9LgvFA72ksenVyKAztdczey9YbGZupE60HSEAiPr676ViSVKUcZwR9W
-            F3aNyc/Tpm/mu9uU9TL+WluLlhewGXrlSxjtv7KAxjpDN/St2HyijyjzN+q5o46w
-            zW5pB/R37/CMwuxarTsZqVcqG88x2AVuFLk8Tc4b/Mg2G+y68A28fNrkPWFKgIUK
-            060agtC6xb54sEGnT1elN0p1mt2ltZCMKLMN7iJcYwmJDZj9C68roLE9A/rAknMh
-            IPll/i0yY8OlYFllPRb2BCC938o2RbVbgWQnXcxBBUfR0ZpqAewtNdtTgEAbYbv2
-            yNdlAAk9qmDX1k+tDJHgadokXgkruCzUMSXSMuTXOZ108/+gtujdBH6Hq92+Dyfw
-            H8mKP3lIOxZbZpOLHfZwnkjonSzgyTrV
-            -----END CERTIFICATE-----" > ~/credhub-ca.crt
-            credhub --version
-            cat ~/credhub-ca.crt
-            credhub login --ca-cert ~/credhub-ca.crt --client-name concourse_client --client-secret nladn6eysrmn3b6mbjya
-            
     - task: credhub-interpolate
       image: platform-automation-image
       file: platform-automation-tasks/tasks/credhub-interpolate.yml
@@ -91,6 +51,12 @@ jobs:
         files: env
       output_mapping:
         interpolated-file: interpolated-env
+      run:
+        path: bash
+        args:
+          - "-c"
+          - |
+            credhub --version
     - task: export-installation
       image: platform-automation-image
       file: platform-automation-tasks/tasks/export-installation.yml

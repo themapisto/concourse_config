@@ -70,32 +70,6 @@ jobs:
             cat ~/credhub-ca.crt
             credhub login --ca-cert ~/credhub-ca.crt --client-name concourse_client --client-secret nladn6eysrmn3b6mbjya
             credhub --version
-              
-            export PREFIX="foundation"
-            export INTERPOLATION_PATHS="foundation"
-              
-              
-            if [ -z "$PREFIX" ]; then
-              echo "Please specify a PREFIX. It is required."
-              exit 1
-            fi
-
-            files=$(cd files && find $INTERPOLATION_PATHS -type f -name '*.yml' -follow)
-
-            if [ "$SKIP_MISSING" == "true" ]; then
-              export SKIP_MISSING="--skip-missing"
-            else
-              export SKIP_MISSING=""
-            fi
-
-            for file in $files; do
-              echo "interpolating files/$file"
-              mkdir -p interpolated-files/"$(dirname "$file")"
-              credhub interpolate --prefix "$PREFIX" \
-              --file files/"$file" $SKIP_MISSING \
-              > interpolated-files/"$file"
-            cat interpolated-files/"$file"
-              done
       input_mapping:
         files: env
       output_mapping:
