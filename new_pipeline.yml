@@ -70,31 +70,6 @@ jobs:
             cat ~/credhub-ca.crt
             credhub login --ca-cert ~/credhub-ca.crt --client-name concourse_client --client-secret nladn6eysrmn3b6mbjya
             credhub --version
-            mkdir ~/foundation
-            ls ~/
-            export PREFIX= "foundation"
-            
-
-
-            # $INTERPOLATION_PATHS needs to be globbed to read multiple files
-            # shellcheck disable=SC2086
-
-            files=$(cd files && find $INTERPOLATION_PATHS -type f -name '*.yml' -follow)
-
-            if [ "$SKIP_MISSING" == "true" ]; then
-              export SKIP_MISSING="--skip-missing"
-            else
-              export SKIP_MISSING=""
-            fi
-
-            for file in $files; do
-              echo "interpolating files/$file"
-              mkdir -p interpolated-files/"$(dirname "$file")"
-              credhub interpolate --prefix "foundation" \
-              --file files/"$file" $SKIP_MISSING \
-              > interpolated-files/"$file"
-            done
-            ls ~/interpolated-files/
         outputs:
         - name: files
 
