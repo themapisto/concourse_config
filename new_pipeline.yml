@@ -72,6 +72,30 @@ jobs:
             credhub --version
             mkdir ~/foundation
             ls ~/
+            
+            if [ -z "$PREFIX" ]; then
+              echo "Please specify a PREFIX. It is required."
+              exit 1
+            fi
+
+            # $INTERPOLATION_PATHS needs to be globbed to read multiple files
+            # shellcheck disable=SC2086
+            mkdir files
+            files=$(cd files && find $INTERPOLATION_PATHS -type f -name '*.yml' -follow)
+
+            if [ "$SKIP_MISSING" == "true" ]; then
+              export SKIP_MISSING="--skip-missing"
+            else
+              export SKIP_MISSING=""
+            fi
+
+            for file in $files; do
+              echo "interpolating files/$file"
+              mkdir -p interpolated-files/"$(dirname "$file")"
+              credhub interpolate --prefix "$PREFIX" \
+              --file files/"$file" $SKIP_MISSING \
+              > interpolated-files/"$file"
+            done
         outputs:
         - name: files
     - task: credhub-interpolate
