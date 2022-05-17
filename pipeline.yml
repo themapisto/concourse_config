@@ -37,6 +37,7 @@ jobs:
         globs: ["*tasks*.zip"]
         unpack: true
     - get: env
+
     - task: credhub-interpolate
       image: platform-automation-image
       file: platform-automation-tasks/tasks/credhub-interpolate.yml
@@ -51,6 +52,7 @@ jobs:
         files: env
       output_mapping:
         interpolated-file: interpolated-env
+
     - task: export-installation
       image: platform-automation-image
       file: platform-automation-tasks/tasks/export-installation.yml
