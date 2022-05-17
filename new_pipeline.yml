@@ -72,7 +72,7 @@ jobs:
             credhub --version
             mkdir ~/foundation
             ls ~/
-            export PREFIX= foundation
+            export PREFIX= "foundation"
             
             if [ -z "$PREFIX" ]; then
               echo "Please specify a PREFIX. It is required."
