@@ -93,8 +93,8 @@ jobs:
               credhub interpolate --prefix "foundation" \
               --file files/"$file" $SKIP_MISSING \
               > interpolated-files/"$file"
-            ls ~/interpolated-files/
             done
+            ls ~/interpolated-files/
         outputs:
         - name: files
 
